@@ -17,6 +17,7 @@ class CreateSituationsTable1789085316962 {
                 {
                     name: "nameSituation",
                     type: "varchar",
+                    isUnique: true,
                 },
                 {
                     name: "createdAt",

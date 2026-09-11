@@ -1,4 +1,4 @@
-                            import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
 import { Users } from "./Users"
 
 @Entity("Situations")
@@ -6,7 +6,7 @@ export class Situations {
     @PrimaryGeneratedColumn()
     id!: number
 
-    @Column()
+    @Column({ unique: true })
     nameSituation!: string
 
     @OneToMany(() => Users, (user) => user.situation)

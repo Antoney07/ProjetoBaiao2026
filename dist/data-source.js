@@ -38,6 +38,8 @@ require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+const Users_1 = require("./entity/Users");
+const Situations_1 = require("./entity/Situations");
 const dialect = process.env.DB_DIALECT ?? "mysql";
 exports.AppDataSource = new typeorm_1.DataSource({
     type: dialect,
@@ -48,8 +50,9 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: process.env.DB_DATABASE,
     synchronize: false,
     logging: true,
-    entities: [],
+    entities: [Users_1.Users, Situations_1.Situations],
     migrations: [__dirname + "/migration/*.js"],
     subscribers: [],
 });
+exports.AppDataSource.initialize().then(() => (console.log("Conexão com o banco de dados estabelecida com sucesso!"))).catch((error) => console.log("Erro ao conectar com o banco de dados:", error));
 //# sourceMappingURL=data-source.js.map

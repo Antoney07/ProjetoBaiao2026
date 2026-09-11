@@ -4,10 +4,13 @@ dotenv.config();
 
 const app = express();
 
-import login from "./controllers/login";
+app.use(express.json());
 
+import AuthController from "./controllers/AuthController";
+import SituationsController from "./controllers/SituationsController";
 
-app.use("/", login);
+app.use("/situations", SituationsController);  
+app.use("/", AuthController);
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Servidor Iniciado na porta ${process.env.PORT || 8080}: http://localhost:${process.env.PORT || 8080}`);
