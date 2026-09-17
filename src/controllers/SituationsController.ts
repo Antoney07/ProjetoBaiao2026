@@ -4,11 +4,41 @@ import { Situations } from "../entity/Situations";
 
 const Router = express.Router();
 
-Router.get("/", (req: Request, res: Response) => {
-    res.send("Bem vindo, galera! Situations");
+Router.get("/situations", async (req: Request, res: Response) => {
+    try {
+        const situationRepository = AppDataSource.getRepository(Situations);
+        const situations = await situationRepository.find();    
+        res.status(200).json(situations);
+        return;
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao listar situações.");
+        return;
+    }
 });
 
-Router.post("/", async (req: Request, res: Response) => {
+Router.get("/situations/:id", async (req: Request, res: Response) => {
+    try {
+
+        const { id } = req.params;
+        const situationRepository = AppDataSource.getRepository(Situations);
+        const situations = await situationRepository.findOneBy({ id: parseInt(String(id), 10) });
+
+        if (!situations) {
+            res.status(404).send("Situação não encontrada.");
+            return;
+        }
+        
+        res.status(200).json(situations);
+        return;
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao visualizar situação.");
+        return;
+    }
+});
+
+Router.post("/situations", async (req: Request, res: Response) => {
     try {
         var data = req.body;
 

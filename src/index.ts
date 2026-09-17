@@ -9,7 +9,7 @@ app.use(express.json());
 import AuthController from "./controllers/AuthController";
 import SituationsController from "./controllers/SituationsController";
 
-app.use("/situations", SituationsController);  
+app.use("/", SituationsController);  
 app.use("/", AuthController);
 
 app.listen(process.env.PORT || 8080, () => {
