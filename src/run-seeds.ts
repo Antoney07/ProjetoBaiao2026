@@ -1,4 +1,5 @@
 import { AppDataSource } from "./data-source";
+import { CreateSituationsSeeds } from "./seeds/CreateSituationsSeeds";
 
 const runSeeds = async () => {
     console.log("Iniciando execução das seeds...");

@@ -11,7 +11,33 @@ Router.get("/situations", async (req, res) => {
     try {
         const situationRepository = data_source_1.AppDataSource.getRepository(Situations_1.Situations);
         const situations = await situationRepository.find();
-        res.status(200).json(situations);
+        const page = Number(req.query.page) || 1;
+        console.log("Página solicitada:", page);
+        const limit = 1;
+        const totalSituations = await situationRepository.count();
+        if (totalSituations === 0) {
+            res.status(400).send("Nenhuma situação encontrada.");
+            return;
+        }
+        const lastPage = Math.ceil(totalSituations / limit);
+        if (page > lastPage || page < 1) {
+            res.status(400).send("Página inválida, o total de páginas é " + lastPage);
+            return;
+        }
+        const offset = (page - 1) * limit;
+        const paginatedSituations = await situationRepository.find({
+            skip: offset,
+            take: limit,
+            order: {
+                id: "DESC"
+            }
+        });
+        res.status(200).json({
+            currentPage: page,
+            lastPage: lastPage,
+            totalSituations: totalSituations,
+            situations: paginatedSituations
+        });
         return;
     }
     catch (error) {
