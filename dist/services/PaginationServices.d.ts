@@ -1,4 +1,4 @@
-import { FindOptionsOrder, ObjectLiteral, Repository } from "typeorm";
+import { FindOptionsOrder, FindOptionsRelations, ObjectLiteral, Repository } from "typeorm";
 interface PaginationResult<T> {
     error: boolean;
     data: T[];
@@ -7,7 +7,7 @@ interface PaginationResult<T> {
     totalRecords: number;
 }
 export declare class PaginationServices {
-    static paginate<T extends ObjectLiteral>(repository: Repository<T>, page?: number, limit?: number, order?: FindOptionsOrder<T>): Promise<PaginationResult<T>>;
+    static paginate<T extends ObjectLiteral>(repository: Repository<T>, page?: number, limit?: number, order?: FindOptionsOrder<T>, relations?: FindOptionsRelations<T>): Promise<PaginationResult<T>>;
 }
 export {};
 //# sourceMappingURL=PaginationServices.d.ts.map

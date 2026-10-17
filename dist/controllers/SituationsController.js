@@ -11,14 +11,18 @@ const Router = express_1.default.Router();
 Router.get("/situations", async (req, res) => {
     try {
         const situationRepository = data_source_1.AppDataSource.getRepository(Situations_1.Situations);
-        const situations = await situationRepository.find();
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 10;
         const result = await PaginationServices_1.PaginationServices.paginate(situationRepository, page, limit, { id: "DESC" });
         res.status(200).json(result);
         return;
     }
-    finally {
+    catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error instanceof Error ? error.message : String(error)
+        });
+        return;
     }
 });
 Router.get("/situations/:id", async (req, res) => {
@@ -89,7 +93,7 @@ Router.delete("/situations/:id", async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Erro ao atualizar situação.");
+        res.status(500).send("Erro ao apagar situação.");
         return;
     }
 });

@@ -2,8 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaginationServices = void 0;
 class PaginationServices {
-    static async paginate(repository, page = 1, limit = 10, order = {}) {
+    static async paginate(repository, page = 1, limit = 10, order = {}, relations = {}) {
         const totalRecords = await repository.count();
+        if (totalRecords === 0) {
+            return { error: false, data: [], currentPage: 1, lastPage: 1, totalRecords: 0 };
+        }
         const lastPage = Math.ceil(totalRecords / limit);
         if (page > lastPage || page < 1) {
             throw new Error(`Página inválida, o total de páginas é ${lastPage}`);
@@ -12,7 +15,8 @@ class PaginationServices {
         const data = await repository.find({
             skip: offset,
             take: limit,
-            order
+            order,
+            relations
         });
         return {
             error: false,

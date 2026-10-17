@@ -40,6 +40,9 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const Users_1 = require("./entity/Users");
 const Situations_1 = require("./entity/Situations");
+const Products_1 = require("./entity/Products");
+const ProductCategories_1 = require("./entity/ProductCategories");
+const ProductSituations_1 = require("./entity/ProductSituations");
 const dialect = process.env.DB_DIALECT ?? "mysql";
 exports.AppDataSource = new typeorm_1.DataSource({
     type: dialect,
@@ -50,7 +53,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: process.env.DB_DATABASE,
     synchronize: false,
     logging: true,
-    entities: [Users_1.Users, Situations_1.Situations],
+    entities: [Users_1.Users, Situations_1.Situations, Products_1.Products, ProductCategories_1.ProductCategories, ProductSituations_1.ProductSituations],
     migrations: [__dirname + "/migration/*.js"],
     subscribers: [],
 });

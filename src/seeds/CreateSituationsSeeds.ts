@@ -12,9 +12,9 @@ export class CreateSituationsSeeds {
     }
 
     const situations: any[] = [
-      { name: "Ativo" },
-      { name: "Inativo" },
-      { name: "Pendente" }
+      { nameSituation: "Ativo" },
+      { nameSituation: "Inativo" },
+      { nameSituation: "Pendente" }
     ];
 
     await situationRepository.save(situations as any);

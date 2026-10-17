@@ -1,5 +1,7 @@
 import { AppDataSource } from "./data-source";
 import { CreateSituationsSeeds } from "./seeds/CreateSituationsSeeds";
+import { CreateProductSituationsSeeds } from "./seeds/CreateProductSituationsSeeds";
+import { CreateProductCategoriesSeeds } from "./seeds/CreateProductCategoriesSeeds";
 
 const runSeeds = async () => {
     console.log("Iniciando execução das seeds...");
@@ -10,6 +12,12 @@ const runSeeds = async () => {
     try {
         const situationSeeds = new CreateSituationsSeeds();
         await situationSeeds.run(AppDataSource);
+
+        const productSituationSeeds = new CreateProductSituationsSeeds();
+        await productSituationSeeds.run(AppDataSource);
+
+        const productCategorySeeds = new CreateProductCategoriesSeeds();
+        await productCategorySeeds.run(AppDataSource);
         
     } catch (error) {
         console.error("Erro ao executar as seeds:", error);
@@ -20,3 +28,4 @@ const runSeeds = async () => {
 };
 
 export default runSeeds;
+runSeeds();

@@ -41,6 +41,6 @@ __decorate([
     __metadata("design:type", Date)
 ], Situations.prototype, "updatedAt", void 0);
 exports.Situations = Situations = __decorate([
-    (0, typeorm_1.Entity)("Situations")
+    (0, typeorm_1.Entity)("situations")
 ], Situations);
 //# sourceMappingURL=Situations.js.map

@@ -12,9 +12,9 @@ class CreateSituationsSeeds {
             return;
         }
         const situations = [
-            { name: "Ativo" },
-            { name: "Inativo" },
-            { name: "Pendente" }
+            { nameSituation: "Ativo" },
+            { nameSituation: "Inativo" },
+            { nameSituation: "Pendente" }
         ];
         await situationRepository.save(situations);
         console.log("|Seed das situações concluído com sucesso!");

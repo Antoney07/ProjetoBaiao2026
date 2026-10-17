@@ -7,8 +7,7 @@ const Router = express.Router();
 
 Router.get("/situations", async (req: Request, res: Response) => {
     try {
-        const situationRepository = AppDataSource.getRepository(Situations);
-        const situations = await situationRepository.find();    
+        const situationRepository = AppDataSource.getRepository(Situations);  
         
         const page = Number(req.query.page) || 1;
 
@@ -17,6 +16,13 @@ Router.get("/situations", async (req: Request, res: Response) => {
         const result = await PaginationServices.paginate(situationRepository, page, limit, { id: "DESC" });
 
         res.status(200).json(result);
+        return;
+    }
+    catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error instanceof Error ? error.message : String(error)
+        });
         return;
     }
 });
@@ -106,7 +112,7 @@ Router.delete("/situations/:id", async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send("Erro ao atualizar situação.");
+        res.status(500).send("Erro ao apagar situação.");
         return;
     }
 });
