@@ -5,7 +5,7 @@ import { PaginationServices } from "../services/PaginationServices";
 
 const Router = express.Router();
 
-Router.get("/product-situation", async (req: Request, res: Response) => {
+Router.get("/product-situations", async (req: Request, res: Response) => {
     try {
         const ProductSituationRepository = AppDataSource.getRepository(ProductSituations);  
         
@@ -27,7 +27,7 @@ Router.get("/product-situation", async (req: Request, res: Response) => {
     }
 });
 
-Router.get("/product-situation/:id", async (req: Request, res: Response) => {
+Router.get("/product-situations/:id", async (req: Request, res: Response) => {
     try {
 
         const { id } = req.params;
@@ -48,7 +48,7 @@ Router.get("/product-situation/:id", async (req: Request, res: Response) => {
     }
 });
 
-Router.post("/product-situation", async (req: Request, res: Response) => {
+Router.post("/product-situations", async (req: Request, res: Response) => {
     try {
         var data = req.body;
 
@@ -67,7 +67,7 @@ Router.post("/product-situation", async (req: Request, res: Response) => {
     }
 });
 
-Router.put("/product-situation/:id", async (req: Request, res: Response) => {
+Router.put("/product-situations/:id", async (req: Request, res: Response) => {
     try {
 
         const { id } = req.params;
@@ -93,7 +93,7 @@ Router.put("/product-situation/:id", async (req: Request, res: Response) => {
     }
 });
 
-Router.delete("/product-situation/:id", async (req: Request, res: Response) => {
+Router.delete("/product-situations/:id", async (req: Request, res: Response) => {
     try {
 
         const { id } = req.params;

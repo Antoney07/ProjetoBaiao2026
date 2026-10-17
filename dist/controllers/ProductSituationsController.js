@@ -8,7 +8,7 @@ const data_source_1 = require("../data-source");
 const ProductSituations_1 = require("../entity/ProductSituations");
 const PaginationServices_1 = require("../services/PaginationServices");
 const Router = express_1.default.Router();
-Router.get("/product-situation", async (req, res) => {
+Router.get("/product-situations", async (req, res) => {
     try {
         const ProductSituationRepository = data_source_1.AppDataSource.getRepository(ProductSituations_1.ProductSituations);
         const page = Number(req.query.page) || 1;
@@ -25,7 +25,7 @@ Router.get("/product-situation", async (req, res) => {
         return;
     }
 });
-Router.get("/product-situation/:id", async (req, res) => {
+Router.get("/product-situations/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const ProductSituationRepository = data_source_1.AppDataSource.getRepository(ProductSituations_1.ProductSituations);
@@ -43,7 +43,7 @@ Router.get("/product-situation/:id", async (req, res) => {
         return;
     }
 });
-Router.post("/product-situation", async (req, res) => {
+Router.post("/product-situations", async (req, res) => {
     try {
         var data = req.body;
         const newProductSituationRepository = data_source_1.AppDataSource.getRepository(ProductSituations_1.ProductSituations);
@@ -59,7 +59,7 @@ Router.post("/product-situation", async (req, res) => {
         res.status(500).send("Erro ao criar situação de produto.");
     }
 });
-Router.put("/product-situation/:id", async (req, res) => {
+Router.put("/product-situations/:id", async (req, res) => {
     try {
         const { id } = req.params;
         var data = req.body;
@@ -79,7 +79,7 @@ Router.put("/product-situation/:id", async (req, res) => {
         return;
     }
 });
-Router.delete("/product-situation/:id", async (req, res) => {
+Router.delete("/product-situations/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const ProductSituationRepository = data_source_1.AppDataSource.getRepository(ProductSituations_1.ProductSituations);
