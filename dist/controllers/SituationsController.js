@@ -1,4 +1,37 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -7,6 +40,7 @@ const express_1 = __importDefault(require("express"));
 const data_source_1 = require("../data-source");
 const Situations_1 = require("../entity/Situations");
 const PaginationServices_1 = require("../services/PaginationServices");
+const yup = __importStar(require("yup"));
 const Router = express_1.default.Router();
 Router.get("/situations", async (req, res) => {
     try {
@@ -46,6 +80,11 @@ Router.get("/situations/:id", async (req, res) => {
 Router.post("/situations", async (req, res) => {
     try {
         var data = req.body;
+        const schema = yup.object().shape({
+            nameSituation: yup.string().required("O campo 'nameSituation' é obrigatório.")
+                .min(3, "O campo 'nameSituation' deve ter no mínimo 3 caracteres.")
+        });
+        await schema.validate(data, { abortEarly: false });
         const newSituationRepository = data_source_1.AppDataSource.getRepository(Situations_1.Situations);
         const newSituation = newSituationRepository.create(data);
         await newSituationRepository.save(newSituation);
@@ -55,6 +94,13 @@ Router.post("/situations", async (req, res) => {
         });
     }
     catch (error) {
+        if (error instanceof yup.ValidationError) {
+            res.status(400).json({
+                error: true,
+                message: error.message
+            });
+            return;
+        }
         console.error(error);
         res.status(500).send("Erro ao criar situação.");
     }
@@ -63,6 +109,11 @@ Router.put("/situations/:id", async (req, res) => {
     try {
         const { id } = req.params;
         var data = req.body;
+        const schema = yup.object().shape({
+            nameSituation: yup.string().required("O campo 'nameSituation' é obrigatório.")
+                .min(3, "O campo 'nameSituation' deve ter no mínimo 3 caracteres.")
+        });
+        await schema.validate(data, { abortEarly: false });
         const situationRepository = data_source_1.AppDataSource.getRepository(Situations_1.Situations);
         const situations = await situationRepository.findOneBy({ id: parseInt(String(id), 10) });
         if (!situations) {
@@ -74,6 +125,13 @@ Router.put("/situations/:id", async (req, res) => {
         res.status(200).json(situations);
     }
     catch (error) {
+        if (error instanceof yup.ValidationError) {
+            res.status(400).json({
+                error: true,
+                message: error.message
+            });
+            return;
+        }
         console.error(error);
         res.status(500).send("Erro ao atualizar situação.");
         return;
